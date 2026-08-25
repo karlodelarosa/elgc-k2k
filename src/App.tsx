@@ -426,7 +426,14 @@ function FutureChurch() {
       if (scrollable <= 0) return
       const p = Math.min(Math.max(-rect.top / scrollable, 0), 1)
       setProgress(p)
-      if (video.readyState > 0 && Number.isFinite(video.duration)) {
+      // Gate on readyState >= 2 (HAVE_CURRENT_DATA), not just metadata.
+      // Seeking before the browser has an actual decoded frame clears the
+      // poster (per spec, a seek dismisses it) with nothing decoded yet to
+      // show in its place — real iOS/Android hardware renders that gap as
+      // black, even though desktop Chrome's mobile emulation papers over
+      // it. Waiting for a real frame first means there's always something
+      // on screen to seek *from*.
+      if (video.readyState >= 2 && Number.isFinite(video.duration)) {
         const target = p * video.duration
         if (Math.abs(video.currentTime - target) > 0.033) {
           const seekable = video as HTMLVideoElement & { fastSeek?: (time: number) => void }
@@ -451,15 +458,18 @@ function FutureChurch() {
     const unlockFrame = () => {
       video.play().then(() => video.pause()).catch(() => {})
     }
+    // Re-run update() once a real frame is decoded (readyState >= 2) so the
+    // video snaps to the correct scroll-matched position — not just frame
+    // 0 — as soon as it's safe to seek without going black.
     video.addEventListener("loadeddata", unlockFrame)
-    video.addEventListener("loadedmetadata", update)
+    video.addEventListener("loadeddata", update)
 
     window.addEventListener("scroll", onScroll, { passive: true })
     update()
     return () => {
       window.removeEventListener("scroll", onScroll)
       video.removeEventListener("loadeddata", unlockFrame)
-      video.removeEventListener("loadedmetadata", update)
+      video.removeEventListener("loadeddata", update)
     }
   }, [activeVideo])
 
