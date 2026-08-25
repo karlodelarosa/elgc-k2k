@@ -1,0 +1,243 @@
+@import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800;900&family=Work+Sans:wght@300;400;500;600;700&display=swap');
+@import 'tailwindcss';
+
+/* ─── Theme tokens ──────────────────────────────────────────────────────────── */
+
+:root {
+  --bg:         #0a0a0a;
+  --bg-alt:     #0d0d0d;
+  --bg-card:    #161616;
+  --bg-inset:   #111111;
+  --fg:         #F4F1EA;
+  --fg-muted:   #666666;
+  --fg-dim:     #444444;
+  --fg-subtle:  #282828;
+  --gold:       #E9B45C;
+  --gold-light: #F3CD8A;
+  --gold-dim:   #97753C;
+  --border:     #1e1e1e;
+  --border-mid: #2a2a2a;
+  --nav-bg:     rgba(10,10,10,0.96);
+  --img-op:     0.18;
+  --hero-r:     10;
+  --hero-g:     10;
+  --hero-b:     10;
+}
+
+[data-theme="light"] {
+  --bg:         #F8F4EF;
+  --bg-alt:     #EDE8E1;
+  --bg-card:    #FFFFFF;
+  --bg-inset:   #F0EBE4;
+  --fg:         #151515;
+  --fg-muted:   #787878;
+  --fg-dim:     #AAAAA0;
+  --fg-subtle:  #D4CEC7;
+  --gold:       #B8862E;
+  --gold-light: #D9A54A;
+  --gold-dim:   #F7E9CE;
+  --border:     #DDD6CC;
+  --border-mid: #C8C0B5;
+  --nav-bg:     rgba(248,244,239,0.96);
+  --img-op:     0.1;
+  --hero-r:     248;
+  --hero-g:     244;
+  --hero-b:     239;
+}
+
+/* ─── Font tokens ───────────────────────────────────────────────────────────── */
+
+@theme {
+  --font-display: 'Barlow Condensed', sans-serif;
+  --font-body:    'Work Sans', sans-serif;
+}
+
+/* ─── Global base ───────────────────────────────────────────────────────────── */
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; scroll-padding-top: 80px; }
+
+body {
+  background-color: var(--bg);
+  color: var(--fg);
+  font-family: 'Work Sans', sans-serif;
+  margin: 0;
+  transition: background-color 0.4s ease, color 0.3s ease;
+}
+
+::-webkit-scrollbar { width: 3px; height: 3px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--border-mid); border-radius: 2px; }
+
+/* ─── Keyframes ─────────────────────────────────────────────────────────────── */
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(28px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes barGrow {
+  from { width: 0%; }
+  to   { width: 24.5%; }
+}
+
+@keyframes spinSlow {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+/* ─── Utility animations ────────────────────────────────────────────────────── */
+
+.fade-up  { animation: fadeUp  0.85s ease both; }
+.fade-in  { animation: fadeIn  1s    ease both; }
+.delay-1  { animation-delay: 0.1s; }
+.delay-2  { animation-delay: 0.25s; }
+.delay-3  { animation-delay: 0.4s; }
+.delay-4  { animation-delay: 0.55s; }
+.delay-5  { animation-delay: 0.7s; }
+
+.bar-grow { animation: barGrow 1.8s cubic-bezier(0.16,1,0.3,1) both; }
+
+/* ─── Reusable component classes ────────────────────────────────────────────── */
+
+.section-label {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 600;
+  font-size: 0.7rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--gold);
+  color: #141414;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700;
+  font-size: 0.95rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 14px 32px;
+  border: none;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+.btn-primary:hover { background: var(--gold-light); transform: translateY(-1px); }
+
+.btn-outline {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: transparent;
+  color: var(--fg);
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700;
+  font-size: 0.95rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 13px 32px;
+  border: 1px solid var(--border-mid);
+  text-decoration: none;
+  cursor: pointer;
+  transition: border-color 0.2s ease, color 0.2s ease;
+}
+.btn-outline:hover { border-color: var(--gold); color: var(--gold); }
+
+.card-hover {
+  transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+.card-hover:hover {
+  transform: translateY(-4px);
+  border-color: var(--gold) !important;
+}
+
+.img-placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  background: var(--bg-inset);
+  border: 1px dashed var(--border-mid);
+  cursor: pointer;
+  transition: border-color 0.3s ease, background 0.3s ease;
+}
+.img-placeholder:hover {
+  border-color: var(--gold);
+  background: var(--bg-card);
+}
+
+.video-placeholder {
+  position: relative;
+  background: var(--bg-inset);
+  border: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  overflow: hidden;
+  transition: border-color 0.3s ease;
+}
+.video-placeholder:hover { border-color: var(--gold); }
+.video-placeholder:hover .play-btn { transform: scale(1.08); }
+
+.play-btn {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  border: 2px solid var(--gold);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.3s ease;
+}
+
+.program-card {
+  border: 1px solid var(--border);
+  background: var(--bg-card);
+  padding: 2.5rem 2rem;
+  transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+  cursor: pointer;
+}
+.program-card:hover {
+  transform: translateY(-5px);
+  border-color: var(--gold);
+  box-shadow: 0 12px 40px rgba(0,0,0,0.12);
+}
+
+/* Theme toggle */
+.theme-toggle {
+  width: 44px;
+  height: 24px;
+  border-radius: 12px;
+  background: var(--border-mid);
+  position: relative;
+  cursor: pointer;
+  border: none;
+  transition: background 0.3s ease;
+}
+.theme-toggle.light { background: var(--gold); }
+.theme-toggle-dot {
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--fg);
+  transition: transform 0.3s ease, background 0.3s ease;
+}
+.theme-toggle.light .theme-toggle-dot {
+  transform: translateX(20px);
+  background: #141414;
+}
