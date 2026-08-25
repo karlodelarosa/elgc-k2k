@@ -70,7 +70,7 @@ const PROGRAMS = [
     tag: "Ongoing",
     tagStyle: { background: "rgba(50,180,100,0.12)", color: "#4CAF80", border: "1px solid rgba(50,180,100,0.25)" },
     detail: "Resets every year — join anytime",
-    cta: "GET YOUR BOTTLE",
+    cta: "MESSAGE US ON FACEBOOK",
   },
   {
     icon: "◈",
@@ -80,7 +80,7 @@ const PROGRAMS = [
     tag: "Open for Signing",
     tagStyle: { background: "rgba(201,150,58,0.12)", color: "var(--gold)", border: "1px solid rgba(201,150,58,0.25)" },
     detail: "Regular or one-time contributions",
-    cta: "SIGN YOUR COVENANT",
+    cta: "MESSAGE US ON FACEBOOK",
   },
   {
     icon: "◉",
@@ -90,7 +90,7 @@ const PROGRAMS = [
     tag: "Visit Us",
     tagStyle: { background: "rgba(230,120,60,0.12)", color: "#E07840", border: "1px solid rgba(230,120,60,0.25)" },
     detail: "Church-affiliated food stall",
-    cta: "FIND US",
+    cta: "MESSAGE US ON FACEBOOK",
   },
 ]
 
@@ -442,9 +442,25 @@ function FutureChurch() {
       requestAnimationFrame(update)
     }
 
+    // Mobile browsers often defer decoding a video's first frame until
+    // playback actually starts, leaving the element blank even once
+    // `preload="auto"` has fetched the data — that's why the frame only
+    // shows up after tapping a tab (which remounts/reloads the video).
+    // A muted play() is allowed without a user gesture, so kick one off
+    // and pause immediately once a frame lands to force it to decode.
+    const unlockFrame = () => {
+      video.play().then(() => video.pause()).catch(() => {})
+    }
+    video.addEventListener("loadeddata", unlockFrame)
+    video.addEventListener("loadedmetadata", update)
+
     window.addEventListener("scroll", onScroll, { passive: true })
     update()
-    return () => window.removeEventListener("scroll", onScroll)
+    return () => {
+      window.removeEventListener("scroll", onScroll)
+      video.removeEventListener("loadeddata", unlockFrame)
+      video.removeEventListener("loadedmetadata", update)
+    }
   }, [activeVideo])
 
   const headerOpacity = Math.max(0, 1 - progress / 0.2)
@@ -657,7 +673,7 @@ function Participate() {
 
               <div style={{ borderTop: "1px solid var(--border)", paddingTop: "1.25rem", display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: "0.75rem" }}>
                 <span style={{ fontSize: "0.75rem", color: "var(--fg-dim)", letterSpacing: "0.06em" }}>{prog.detail}</span>
-                <button className="btn-primary" style={{ padding: "8px 18px", fontSize: "0.7rem" }}>{prog.cta}</button>
+                <a href="https://m.me/elgchurchofficial" target="_blank" rel="noopener noreferrer" className="btn-primary" style={{ padding: "8px 18px", fontSize: "0.7rem" }}>{prog.cta}</a>
               </div>
             </div>
           ))}
@@ -924,11 +940,15 @@ function Footer() {
             ))}
           </div>
           <div style={{ display: "flex", gap: "0.75rem" }}>
-            {["FB", "IG", "YT"].map(s => (
-              <a key={s} href="#" style={{ width: 36, height: 36, border: "1px solid var(--border-mid)", display: "flex", alignItems: "center", justifyContent: "center", fontFamily: "var(--font-display)", fontWeight: 700, fontSize: "0.62rem", letterSpacing: "0.08em", color: "var(--fg-muted)", textDecoration: "none", transition: "border-color 0.2s, color 0.2s" }}
+            {[
+              { label: "FB", href: "https://www.facebook.com/elgchurchofficial" },
+              { label: "IG", href: "https://www.instagram.com/elgc.official/" },
+              { label: "TT", href: "https://www.tiktok.com/@elgchurch" },
+            ].map(s => (
+              <a key={s.label} href={s.href} target="_blank" rel="noopener noreferrer" style={{ width: 36, height: 36, border: "1px solid var(--border-mid)", display: "flex", alignItems: "center", justifyContent: "center", fontFamily: "var(--font-display)", fontWeight: 700, fontSize: "0.62rem", letterSpacing: "0.08em", color: "var(--fg-muted)", textDecoration: "none", transition: "border-color 0.2s, color 0.2s" }}
                 onMouseEnter={e => { e.currentTarget.style.borderColor = "var(--gold)"; e.currentTarget.style.color = "var(--gold)" }}
                 onMouseLeave={e => { e.currentTarget.style.borderColor = "var(--border-mid)"; e.currentTarget.style.color = "var(--fg-muted)" }}>
-                {s}
+                {s.label}
               </a>
             ))}
           </div>
