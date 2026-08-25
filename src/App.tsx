@@ -381,8 +381,8 @@ function BigVision() {
 // ─── Future Church (Scroll-driven video) ─────────────────────────────────────
 
 const CHURCH_VIDEOS = {
-  construction: { src: "/elgc-building-church.mp4", label: "Construction" },
-  walkthrough: { src: "/elgc-going-inside.mp4", label: "Walkthrough" },
+  construction: { src: "/elgc-building-church.mp4", poster: "/elgc-exterior.png", label: "Construction" },
+  walkthrough: { src: "/elgc-going-inside.mp4", poster: "/elgc-interior.jpeg", label: "Walkthrough" },
 } as const
 
 const CHURCH_IMAGES = [
@@ -473,6 +473,7 @@ function FutureChurch() {
             key={CHURCH_VIDEOS[activeVideo].src}
             ref={videoRef}
             src={CHURCH_VIDEOS[activeVideo].src}
+            poster={CHURCH_VIDEOS[activeVideo].poster}
             muted
             playsInline
             preload="auto"
