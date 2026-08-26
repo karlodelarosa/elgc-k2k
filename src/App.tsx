@@ -200,7 +200,7 @@ function Hero() {
   const textShadow = "0 2px 20px rgba(0,0,0,0.55)"
 
   return (
-    <section id="hero" style={{ position: "relative", minHeight: "100vh", display: "flex", flexDirection: "column", justifyContent: "flex-end", overflow: "hidden", background: "var(--bg)" }}>
+    <section id="hero" style={{ position: "relative", minHeight: "100dvh", display: "flex", flexDirection: "column", justifyContent: "flex-end", overflow: "hidden", background: "var(--bg)" }}>
       <div style={{ position: "absolute", inset: 0 }}>
         <video autoPlay muted loop playsInline
           src="/elgc-building-church.mp4"
@@ -490,7 +490,7 @@ function FutureChurch() {
   return (
     <section id="future-church" style={{ background: "#000" }}>
       <div ref={wrapRef} style={{ position: "relative", height: "280vh" }}>
-        <div style={{ position: "sticky", top: 0, height: "100vh", overflow: "hidden" }}>
+        <div style={{ position: "sticky", top: 0, height: "100dvh", overflow: "hidden" }}>
           <video
             key={CHURCH_VIDEOS[activeVideo].src}
             ref={videoRef}
@@ -1027,7 +1027,7 @@ export default function App() {
 
   return (
     <ThemeContext.Provider value={{ theme, toggle }}>
-      <div data-theme={theme} style={{ background: "var(--bg)", color: "var(--fg)", minHeight: "100vh" }}>
+      <div data-theme={theme} style={{ background: "var(--bg)", color: "var(--fg)", minHeight: "100dvh" }}>
         <Nav />
         <Hero />
         <Vision />
