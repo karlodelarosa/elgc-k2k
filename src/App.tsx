@@ -251,13 +251,15 @@ function Hero() {
   )
 }
 
-// ─── About Church ─────────────────────────────────────────────────────────────
+// ─── About Church (identity + why-we-need-a-new-place) ────────────────────────
 
 function AboutChurch() {
   const { ref, inView } = useInView()
   return (
-    <section id="about" ref={ref as React.RefObject<HTMLElement>} style={{ padding: "5rem 2rem", background: "var(--bg)", borderTop: "1px solid var(--border)" }}>
-      <div style={{ maxWidth: 1280, margin: "0 auto" }}>
+    <section id="about" ref={ref as React.RefObject<HTMLElement>} style={{ position: "relative", padding: "5rem 2rem", background: "var(--bg-alt)", borderTop: "1px solid var(--border)", overflow: "hidden" }}>
+      <div style={{ position: "absolute", top: "-20%", left: "50%", transform: "translateX(-50%)", width: 900, height: 900, borderRadius: "50%", background: "radial-gradient(circle, rgba(201,150,58,0.1) 0%, transparent 70%)", pointerEvents: "none" }} />
+
+      <div style={{ position: "relative", maxWidth: 1280, margin: "0 auto" }}>
         <div className={inView ? "fade-up" : ""} style={{ opacity: inView ? undefined : 0 }}>
           <span className="section-label">About ELGC</span>
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", flexWrap: "wrap", gap: "2rem", marginTop: "0.75rem" }}>
@@ -270,7 +272,7 @@ function AboutChurch() {
           </div>
         </div>
 
-        <div className={inView ? "fade-up delay-2" : ""} style={{ display: "flex", alignItems: "center", flexWrap: "wrap", gap: "1rem", marginTop: "2.5rem", opacity: inView ? undefined : 0 }}>
+        <div className={inView ? "fade-up delay-2" : ""} style={{ display: "flex", alignItems: "center", flexWrap: "wrap", gap: "1rem", marginTop: "2rem", opacity: inView ? undefined : 0 }}>
           <a href="https://elgchurch.com/" target="_blank" rel="noopener noreferrer" className="btn-outline">VISIT ELGCHURCH.COM</a>
           <div style={{ display: "flex", gap: "0.75rem" }}>
             {SOCIAL_LINKS.map(s => (
@@ -281,6 +283,31 @@ function AboutChurch() {
               </a>
             ))}
           </div>
+        </div>
+
+        <div style={{ borderTop: "1px solid var(--border)", margin: "3.5rem 0" }} />
+
+        <div id="vision" className={inView ? "fade-up delay-3" : ""} style={{ opacity: inView ? undefined : 0 }}>
+          <span className="section-label">Why We Need a New Place</span>
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", flexWrap: "wrap", gap: "2rem", marginTop: "0.75rem" }}>
+            <h2 style={{ fontFamily: "var(--font-display)", fontWeight: 900, fontSize: "clamp(2rem,4.2vw,3.5rem)", textTransform: "uppercase", letterSpacing: "-0.01em", lineHeight: 0.95, color: "var(--fg)", margin: 0 }}>
+              More than<br />a building.
+            </h2>
+            <p style={{ color: "var(--fg-muted)", maxWidth: 400, lineHeight: 1.6, margin: 0, fontSize: "0.95rem" }}>
+              We are not asking for a bigger room. We are praying for a place where God's work can expand into the next generation.
+            </p>
+          </div>
+        </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3" style={{ gap: "1px", marginTop: "2.25rem", background: "var(--border)" }}>
+          {VISION_CARDS.map((card, i) => (
+            <div key={card.title} className={`card-hover ${inView ? `fade-up delay-${Math.min(i + 1, 5)}` : ""}`}
+              style={{ background: "var(--bg-alt)", padding: "1.75rem 1.75rem", border: "none", opacity: inView ? undefined : 0 }}>
+              <div style={{ color: "var(--gold)", fontSize: "0.9rem", marginBottom: "0.85rem" }}>{card.icon}</div>
+              <h3 style={{ fontFamily: "var(--font-display)", fontWeight: 800, fontSize: "1.15rem", letterSpacing: "0.08em", textTransform: "uppercase", color: "var(--fg)", margin: "0 0 0.5rem" }}>{card.title}</h3>
+              <p style={{ color: "var(--fg-muted)", fontSize: "0.85rem", lineHeight: 1.6, margin: 0 }}>{card.body}</p>
+            </div>
+          ))}
         </div>
       </div>
     </section>
@@ -347,42 +374,6 @@ function Story() {
               </p>
             </div>
           </div>
-        </div>
-      </div>
-    </section>
-  )
-}
-
-// ─── Vision Cards ─────────────────────────────────────────────────────────────
-
-function Vision() {
-  const { ref, inView } = useInView()
-  return (
-    <section id="vision" ref={ref as React.RefObject<HTMLElement>} style={{ position: "relative", padding: "4rem 2rem", background: "var(--bg-alt)", borderTop: "1px solid var(--border)", overflow: "hidden" }}>
-      <div style={{ position: "absolute", top: "-20%", left: "50%", transform: "translateX(-50%)", width: 900, height: 900, borderRadius: "50%", background: "radial-gradient(circle, rgba(201,150,58,0.1) 0%, transparent 70%)", pointerEvents: "none" }} />
-
-      <div style={{ position: "relative", maxWidth: 1280, margin: "0 auto" }}>
-        <div className={inView ? "fade-up" : ""} style={{ opacity: inView ? undefined : 0 }}>
-          <span className="section-label">Why We Need a New Place</span>
-          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", flexWrap: "wrap", gap: "2rem", marginTop: "0.75rem" }}>
-            <h2 style={{ fontFamily: "var(--font-display)", fontWeight: 900, fontSize: "clamp(2rem,4.2vw,3.5rem)", textTransform: "uppercase", letterSpacing: "-0.01em", lineHeight: 0.95, color: "var(--fg)", margin: 0 }}>
-              More than<br />a building.
-            </h2>
-            <p style={{ color: "var(--fg-muted)", maxWidth: 400, lineHeight: 1.6, margin: 0, fontSize: "0.95rem" }}>
-              We are not asking for a bigger room. We are praying for a place where God's work can expand into the next generation.
-            </p>
-          </div>
-        </div>
-
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3" style={{ gap: "1px", marginTop: "2.25rem", background: "var(--border)" }}>
-          {VISION_CARDS.map((card, i) => (
-            <div key={card.title} className={`card-hover ${inView ? `fade-up delay-${Math.min(i + 1, 5)}` : ""}`}
-              style={{ background: "var(--bg-alt)", padding: "1.75rem 1.75rem", border: "none", opacity: inView ? undefined : 0 }}>
-              <div style={{ color: "var(--gold)", fontSize: "0.9rem", marginBottom: "0.85rem" }}>{card.icon}</div>
-              <h3 style={{ fontFamily: "var(--font-display)", fontWeight: 800, fontSize: "1.15rem", letterSpacing: "0.08em", textTransform: "uppercase", color: "var(--fg)", margin: "0 0 0.5rem" }}>{card.title}</h3>
-              <p style={{ color: "var(--fg-muted)", fontSize: "0.85rem", lineHeight: 1.6, margin: 0 }}>{card.body}</p>
-            </div>
-          ))}
         </div>
       </div>
     </section>
@@ -1079,7 +1070,6 @@ export default function App() {
         <Nav />
         <Hero />
         <AboutChurch />
-        <Vision />
         <FutureChurch />
         <Story />
         <BigVision />
