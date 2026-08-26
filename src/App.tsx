@@ -263,11 +263,11 @@ function AboutChurch() {
         <div className={inView ? "fade-up" : ""} style={{ opacity: inView ? undefined : 0 }}>
           <span className="section-label">About ELGC</span>
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", flexWrap: "wrap", gap: "2rem", marginTop: "0.75rem" }}>
-            <h2 style={{ fontFamily: "var(--font-display)", fontWeight: 900, fontSize: "clamp(1.8rem,4vw,3rem)", textTransform: "uppercase", letterSpacing: "-0.01em", lineHeight: 1, color: "var(--fg)", margin: 0 }}>
-              {"Emmanuel's Living"}<br />Gospel Church
+            <h2 style={{ fontFamily: "var(--font-display)", fontWeight: 900, fontSize: "clamp(2rem,4.2vw,3.5rem)", textTransform: "uppercase", letterSpacing: "-0.01em", lineHeight: 0.95, color: "var(--fg)", margin: 0 }}>
+              More than<br />a building.
             </h2>
-            <p style={{ color: "var(--fg-muted)", maxWidth: 420, lineHeight: 1.6, margin: 0, fontSize: "0.95rem" }}>
-              A Place to Worship. A Place to Grow. A Place to Reach More.
+            <p style={{ color: "var(--fg-muted)", maxWidth: 440, lineHeight: 1.6, margin: 0, fontSize: "0.95rem" }}>
+              {"We're Emmanuel's Living Gospel Church — a place to worship, a place to grow, a place to reach more. We're not asking for a bigger room. We're praying for a place where God's work can expand into the next generation."}
             </p>
           </div>
         </div>
@@ -285,21 +285,7 @@ function AboutChurch() {
           </div>
         </div>
 
-        <div style={{ borderTop: "1px solid var(--border)", margin: "3.5rem 0" }} />
-
-        <div id="vision" className={inView ? "fade-up delay-3" : ""} style={{ opacity: inView ? undefined : 0 }}>
-          <span className="section-label">Why We Need a New Place</span>
-          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", flexWrap: "wrap", gap: "2rem", marginTop: "0.75rem" }}>
-            <h2 style={{ fontFamily: "var(--font-display)", fontWeight: 900, fontSize: "clamp(2rem,4.2vw,3.5rem)", textTransform: "uppercase", letterSpacing: "-0.01em", lineHeight: 0.95, color: "var(--fg)", margin: 0 }}>
-              More than<br />a building.
-            </h2>
-            <p style={{ color: "var(--fg-muted)", maxWidth: 400, lineHeight: 1.6, margin: 0, fontSize: "0.95rem" }}>
-              We are not asking for a bigger room. We are praying for a place where God's work can expand into the next generation.
-            </p>
-          </div>
-        </div>
-
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3" style={{ gap: "1px", marginTop: "2.25rem", background: "var(--border)" }}>
+        <div id="vision" className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3" style={{ gap: "1px", marginTop: "3rem", background: "var(--border)" }}>
           {VISION_CARDS.map((card, i) => (
             <div key={card.title} className={`card-hover ${inView ? `fade-up delay-${Math.min(i + 1, 5)}` : ""}`}
               style={{ background: "var(--bg-alt)", padding: "1.75rem 1.75rem", border: "none", opacity: inView ? undefined : 0 }}>
