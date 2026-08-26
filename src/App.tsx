@@ -449,27 +449,39 @@ function FutureChurch() {
       requestAnimationFrame(update)
     }
 
-    // Mobile browsers often defer decoding a video's first frame until
-    // playback actually starts, leaving the element blank even once
-    // `preload="auto"` has fetched the data — that's why the frame only
-    // shows up after tapping a tab (which remounts/reloads the video).
-    // A muted play() is allowed without a user gesture, so kick one off
-    // and pause immediately once a frame lands to force it to decode.
+    // Mobile browsers cap how aggressively they preload a <video> that's
+    // still far off-screen, regardless of `preload="auto"` — the fetch
+    // doesn't really get going until the element is near the viewport or
+    // something (like a tap, which remounts the element) forces it. A
+    // muted play() is allowed without a user gesture and is itself enough
+    // to force the browser to start fetching + decoding, so trigger one
+    // as soon as this section is getting close, well before the user
+    // actually scrolls into it — that way it's already loaded and ready
+    // to respond the instant scrubbing starts.
     const unlockFrame = () => {
       video.play().then(() => video.pause()).catch(() => {})
     }
+    const approachObserver = new IntersectionObserver(
+      entries => {
+        if (!entries[0]?.isIntersecting) return
+        unlockFrame()
+        approachObserver.disconnect()
+      },
+      { rootMargin: "800px 0px 800px 0px" },
+    )
+    approachObserver.observe(wrap)
+
     // Re-run update() once a real frame is decoded (readyState >= 2) so the
     // video snaps to the correct scroll-matched position — not just frame
     // 0 — as soon as it's safe to seek without going black.
-    video.addEventListener("loadeddata", unlockFrame)
     video.addEventListener("loadeddata", update)
 
     window.addEventListener("scroll", onScroll, { passive: true })
     update()
     return () => {
       window.removeEventListener("scroll", onScroll)
-      video.removeEventListener("loadeddata", unlockFrame)
       video.removeEventListener("loadeddata", update)
+      approachObserver.disconnect()
     }
   }, [activeVideo])
 
