@@ -111,6 +111,12 @@ const WAYS = [
   { icon: "□", title: "SHARE", body: "Invite others to become part of the journey. Grow the movement by telling the story." },
 ]
 
+const SOCIAL_LINKS = [
+  { label: "FB", href: "https://www.facebook.com/elgchurchofficial" },
+  { label: "IG", href: "https://www.instagram.com/elgc.official/" },
+  { label: "TT", href: "https://www.tiktok.com/@elgchurch" },
+]
+
 // ─── Nav ─────────────────────────────────────────────────────────────────────
 
 function Nav() {
@@ -125,6 +131,7 @@ function Nav() {
   }, [])
 
   const links = [
+    { label: "About", href: "#about" },
     { label: "Why K2K", href: "#vision" },
     { label: "Our Vision", href: "#future-church" },
     { label: "Progress", href: "#progress" },
@@ -214,7 +221,10 @@ function Hero() {
       </div>
 
       <div style={{ position: "absolute", top: 80, left: 0, right: 0, display: "flex", justifyContent: "center" }}>
-        <span className="section-label" style={{ fontSize: "0.62rem", letterSpacing: "0.28em" }}>EMMANUEL'S LIVING GOSPEL CHURCH</span>
+        <a href="#about" className="section-label" style={{ fontSize: "0.62rem", letterSpacing: "0.28em", textDecoration: "none", transition: "opacity 0.2s ease" }}
+          onMouseEnter={e => (e.currentTarget.style.opacity = "0.7")}
+          onMouseLeave={e => (e.currentTarget.style.opacity = "1")}
+        >EMMANUEL'S LIVING GOSPEL CHURCH</a>
       </div>
 
       <div style={{ position: "relative", maxWidth: 1280, margin: "0 auto", padding: "0 2rem 5rem", width: "100%" }}>
@@ -236,6 +246,42 @@ function Hero() {
       <div style={{ position: "absolute", bottom: 24, left: "50%", transform: "translateX(-50%)", display: "flex", flexDirection: "column", alignItems: "center", gap: 8 }}>
         <span style={{ fontSize: "0.62rem", letterSpacing: "0.2em", color: "var(--fg-dim)", textTransform: "uppercase" }}>Scroll</span>
         <div style={{ width: 1, height: 40, background: `linear-gradient(to bottom, var(--fg-dim), transparent)` }} />
+      </div>
+    </section>
+  )
+}
+
+// ─── About Church ─────────────────────────────────────────────────────────────
+
+function AboutChurch() {
+  const { ref, inView } = useInView()
+  return (
+    <section id="about" ref={ref as React.RefObject<HTMLElement>} style={{ padding: "5rem 2rem", background: "var(--bg)", borderTop: "1px solid var(--border)" }}>
+      <div style={{ maxWidth: 1280, margin: "0 auto" }}>
+        <div className={inView ? "fade-up" : ""} style={{ opacity: inView ? undefined : 0 }}>
+          <span className="section-label">About ELGC</span>
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", flexWrap: "wrap", gap: "2rem", marginTop: "0.75rem" }}>
+            <h2 style={{ fontFamily: "var(--font-display)", fontWeight: 900, fontSize: "clamp(1.8rem,4vw,3rem)", textTransform: "uppercase", letterSpacing: "-0.01em", lineHeight: 1, color: "var(--fg)", margin: 0 }}>
+              {"Emmanuel's Living"}<br />Gospel Church
+            </h2>
+            <p style={{ color: "var(--fg-muted)", maxWidth: 420, lineHeight: 1.6, margin: 0, fontSize: "0.95rem" }}>
+              A Place to Worship. A Place to Grow. A Place to Reach More.
+            </p>
+          </div>
+        </div>
+
+        <div className={inView ? "fade-up delay-2" : ""} style={{ display: "flex", alignItems: "center", flexWrap: "wrap", gap: "1rem", marginTop: "2.5rem", opacity: inView ? undefined : 0 }}>
+          <a href="https://elgchurch.com/" target="_blank" rel="noopener noreferrer" className="btn-outline">VISIT ELGCHURCH.COM</a>
+          <div style={{ display: "flex", gap: "0.75rem" }}>
+            {SOCIAL_LINKS.map(s => (
+              <a key={s.label} href={s.href} target="_blank" rel="noopener noreferrer" style={{ width: 40, height: 40, border: "1px solid var(--border-mid)", display: "flex", alignItems: "center", justifyContent: "center", fontFamily: "var(--font-display)", fontWeight: 700, fontSize: "0.68rem", letterSpacing: "0.08em", color: "var(--fg-muted)", textDecoration: "none", transition: "border-color 0.2s, color 0.2s" }}
+                onMouseEnter={e => { e.currentTarget.style.borderColor = "var(--gold)"; e.currentTarget.style.color = "var(--gold)" }}
+                onMouseLeave={e => { e.currentTarget.style.borderColor = "var(--border-mid)"; e.currentTarget.style.color = "var(--fg-muted)" }}>
+                {s.label}
+              </a>
+            ))}
+          </div>
+        </div>
       </div>
     </section>
   )
@@ -825,7 +871,7 @@ const FAQS = [
   },
   {
     q: "Who do I contact if I have more questions?",
-    a: "Reach out to ELGC directly — see the Contact section below, or visit our official website.",
+    a: "Reach out to ELGC directly — see the About ELGC section at the top of this page for our social channels, or visit our official website.",
   },
 ]
 
@@ -944,7 +990,13 @@ function OfficialSite() {
 // ─── Footer ───────────────────────────────────────────────────────────────────
 
 function Footer() {
-  const links = ["About K2K", "Progress", "Ways to Give", "Contact", "ELGC"]
+  const links = [
+    { label: "About K2K", href: "#vision" },
+    { label: "Progress", href: "#progress" },
+    { label: "Ways to Give", href: "#participate" },
+    { label: "Contact", href: "#about" },
+    { label: "ELGC", href: "#about" },
+  ]
   return (
     <footer style={{ background: "var(--bg)", borderTop: "1px solid var(--border)", padding: "3rem 2rem" }}>
       <div style={{ maxWidth: 1280, margin: "0 auto" }}>
@@ -955,19 +1007,15 @@ function Footer() {
           </div>
           <div style={{ display: "flex", gap: "2rem", flexWrap: "wrap" }}>
             {links.map(l => (
-              <a key={l} href="#" style={{ fontSize: "0.78rem", color: "var(--fg-muted)", textDecoration: "none", letterSpacing: "0.06em", transition: "color 0.2s" }}
+              <a key={l.label} href={l.href} style={{ fontSize: "0.78rem", color: "var(--fg-muted)", textDecoration: "none", letterSpacing: "0.06em", transition: "color 0.2s" }}
                 onMouseEnter={e => (e.currentTarget.style.color = "var(--fg)")}
                 onMouseLeave={e => (e.currentTarget.style.color = "var(--fg-muted)")}>
-                {l}
+                {l.label}
               </a>
             ))}
           </div>
           <div style={{ display: "flex", gap: "0.75rem" }}>
-            {[
-              { label: "FB", href: "https://www.facebook.com/elgchurchofficial" },
-              { label: "IG", href: "https://www.instagram.com/elgc.official/" },
-              { label: "TT", href: "https://www.tiktok.com/@elgchurch" },
-            ].map(s => (
+            {SOCIAL_LINKS.map(s => (
               <a key={s.label} href={s.href} target="_blank" rel="noopener noreferrer" style={{ width: 36, height: 36, border: "1px solid var(--border-mid)", display: "flex", alignItems: "center", justifyContent: "center", fontFamily: "var(--font-display)", fontWeight: 700, fontSize: "0.62rem", letterSpacing: "0.08em", color: "var(--fg-muted)", textDecoration: "none", transition: "border-color 0.2s, color 0.2s" }}
                 onMouseEnter={e => { e.currentTarget.style.borderColor = "var(--gold)"; e.currentTarget.style.color = "var(--gold)" }}
                 onMouseLeave={e => { e.currentTarget.style.borderColor = "var(--border-mid)"; e.currentTarget.style.color = "var(--fg-muted)" }}>
@@ -1030,6 +1078,7 @@ export default function App() {
       <div data-theme={theme} style={{ background: "var(--bg)", color: "var(--fg)", minHeight: "100dvh" }}>
         <Nav />
         <Hero />
+        <AboutChurch />
         <Vision />
         <FutureChurch />
         <Story />
