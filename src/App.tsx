@@ -147,10 +147,16 @@ function Nav() {
       transition: "background 0.4s ease, border-color 0.4s ease",
     }}>
       <div style={{ maxWidth: 1280, margin: "0 auto", padding: "0 2rem", display: "flex", alignItems: "center", justifyContent: "space-between", height: 64 }}>
-        <a href="#hero" style={{ fontFamily: "var(--font-display)", fontWeight: 900, fontSize: "1.5rem", letterSpacing: "0.12em", color: "var(--fg)", textDecoration: "none", display: "flex", alignItems: "center", gap: 8 }}>
-          K2K
-          <span style={{ color: "var(--gold)", fontSize: "0.65rem", letterSpacing: "0.12em", fontWeight: 600 }}>ELGC</span>
-        </a>
+        <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+          <a href="#hero" style={{ fontFamily: "var(--font-display)", fontWeight: 900, fontSize: "1.5rem", letterSpacing: "0.12em", color: "var(--fg)", textDecoration: "none" }}>
+            K2K
+          </a>
+          <a href="https://elgchurch.com/" target="_blank" rel="noopener noreferrer"
+            style={{ color: "var(--gold)", fontSize: "0.68rem", letterSpacing: "0.1em", fontWeight: 700, textDecoration: "none", border: "1px solid var(--gold)", borderRadius: 3, padding: "3px 7px", transition: "opacity 0.2s ease" }}
+            onMouseEnter={e => (e.currentTarget.style.opacity = "0.7")}
+            onMouseLeave={e => (e.currentTarget.style.opacity = "1")}
+          >ELGC</a>
+        </div>
 
         <div style={{ gap: "2rem", alignItems: "center" }} className="hidden md:flex">
           {links.map(l => (
@@ -220,11 +226,12 @@ function Hero() {
         <div style={{ position: "absolute", inset: "auto 0 0 0", height: "42%", background: "linear-gradient(to top, rgba(0,0,0,0.6) 0%, transparent 100%)" }} />
       </div>
 
-      <div style={{ position: "absolute", top: 80, left: 0, right: 0, display: "flex", justifyContent: "center" }}>
-        <a href="#about" className="section-label" style={{ fontSize: "0.62rem", letterSpacing: "0.28em", textDecoration: "none", transition: "opacity 0.2s ease" }}
-          onMouseEnter={e => (e.currentTarget.style.opacity = "0.7")}
+      <div style={{ position: "absolute", top: 80, left: 0, right: 0, display: "flex", justifyContent: "center", padding: "0 2rem" }}>
+        <a href="https://elgchurch.com/" target="_blank" rel="noopener noreferrer"
+          style={{ fontFamily: "var(--font-display)", fontWeight: 600, fontSize: "clamp(0.78rem, 2vw, 0.95rem)", letterSpacing: "0.03em", color: "var(--gold)", textDecoration: "none", textAlign: "center", textShadow, transition: "opacity 0.2s ease" }}
+          onMouseEnter={e => (e.currentTarget.style.opacity = "0.75")}
           onMouseLeave={e => (e.currentTarget.style.opacity = "1")}
-        >EMMANUEL'S LIVING GOSPEL CHURCH</a>
+        >{"The official K2K campaign of Emmanuel's Living Gospel Church"}</a>
       </div>
 
       <div style={{ position: "relative", maxWidth: 1280, margin: "0 auto", padding: "0 2rem 5rem", width: "100%" }}>
